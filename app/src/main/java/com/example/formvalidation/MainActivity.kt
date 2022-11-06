@@ -8,7 +8,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var personName: EditText
@@ -28,60 +27,54 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun submitForm() {
-        val nameValid = validName() == null
-        val surnameValid = validSurname() == null
-        val emailValid = validEmailAddress() == null
-        val passwordValid = validPassword() == null
-        val checkBoxValid = validCheckBox() == null
 
-        if (nameValid && surnameValid && emailValid && passwordValid && checkBoxValid) {
+        if (validName() && validSurname() && validEmailAddress() && validPassword() && validCheckBox()) {
             Toast.makeText(this, "You are registered", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Houston, we have a problem", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun validName(): String?
-    {
+    private fun validName(): Boolean {
         val name = personName.text.toString()
         if(name.length < 3) {
-            return "Name must be longer than 2 characters"
+            return false
         }
-        return null
+        return true
     }
 
-    private fun validSurname(): String? {
+    private fun validSurname(): Boolean {
         val surname = personSurname.text.toString()
         if(surname.length < 5) {
-            return "Surname must be longer than 4 characters"
+            return false
         }
-        return null
+        return true
     }
 
-    private fun validEmailAddress(): String? {
+    private fun validEmailAddress(): Boolean {
         val emailAddress = emailAddress.text.toString()
         if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()){
-            return "Invalid Email Address"
+            return false
         }
-        return null
+        return true
     }
 
-    private fun validPassword(): String? {
+    private fun validPassword(): Boolean {
         val password = password.text.toString()
 
         if(password.length < 8){
-            return "Password must be longer than 8 characters"
+            return false
         }
         if (!password.matches(".*[0-9].*".toRegex())){
-            return "Password must contain at least one number"
+            return false
         }
-        return null
+        return true
     }
 
-    private  fun validCheckBox(): String? {
+    private  fun validCheckBox(): Boolean {
         if(!checkBox.isChecked){
-            return "You must check checkbox"
+            return false
         }
-        return null
+        return true
     }
 
     private fun init() {
@@ -92,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         checkBox = findViewById(R.id.checkBox)
         submitBtn = findViewById(R.id.submitBtn)
     }
-
 
 }
 
